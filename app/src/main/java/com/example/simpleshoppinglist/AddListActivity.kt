@@ -14,42 +14,42 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class DodajListuActivity : AppCompatActivity() {
-    lateinit var imeListe: String
+class AddListActivity : AppCompatActivity() {
+    lateinit var listTitle: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_dodaj_listu)
+        setContentView(R.layout.activity_add_list)
         val date = getCurrentDateTime()
         val dateInString = date.toString("yyyy/MM/dd")
-        val btnDodajListu: Button = findViewById(R.id.btnDodajListu)
-        val nazivListe: EditText = findViewById(R.id.nazivListeEditText)
-        val datum: TextView = findViewById(R.id.datumTextField)
-        datum.text = dateInString
+        val btnAddList: Button = findViewById(R.id.btnDodajListu)
+        val frmListName: EditText = findViewById(R.id.nazivListeEditText)
+        val lblDate: TextView = findViewById(R.id.datumTextField)
+        lblDate.text = dateInString
 
 
-        btnDodajListu.setOnClickListener {
+        btnAddList.setOnClickListener {
             /*  */
-            imeListe = nazivListe.text.toString()
+            listTitle = frmListName.text.toString()
             when {
                 checkIfListExist() -> Toast.makeText(
                     this,
                     "There is already a list with that name",
                     Toast.LENGTH_SHORT
                 ).show()
-                imeListe.isEmpty() -> Toast.makeText(
+                listTitle.isEmpty() -> Toast.makeText(
                     this,
                     "Please enter list name",
                     Toast.LENGTH_SHORT
                 ).show()
-                imeListe.length > 20 -> Toast.makeText(
+                listTitle.length > 20 -> Toast.makeText(
                     this,
                     "Maximum 20 characters allowed!",
                     Toast.LENGTH_SHORT
                 ).show()
                 else -> {
-                    val singleLista = SingleLista(nazivListe.text.toString(), datum.text.toString())
+                    val singleList = SingleLista(frmListName.text.toString(), lblDate.text.toString())
                     val intent = Intent(this, MainActivity::class.java)
-                    intent.putExtra("Single_Lista", singleLista as Serializable)
+                    intent.putExtra("Single_Lista", singleList as Serializable)
                     setResult(Activity.RESULT_OK, intent)
                     finish()
                 }
@@ -60,8 +60,8 @@ class DodajListuActivity : AppCompatActivity() {
     }
 
     fun checkIfListExist(): Boolean {
-        for (item in MainActivity.sveListe) {
-            if (item.naziv.toString() == imeListe) {
+        for (item in MainActivity.everyList) {
+            if (item.title.toString() == listTitle) {
                 return true
             }
         }

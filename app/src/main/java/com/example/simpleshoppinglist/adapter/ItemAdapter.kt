@@ -3,13 +3,11 @@ package com.example.simpleshoppinglist.adapter
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.simpleshoppinglist.R
@@ -17,14 +15,13 @@ import com.example.simpleshoppinglist.SingleListActivity
 import com.example.simpleshoppinglist.model.SingleLista
 import com.google.gson.Gson
 import java.io.Serializable
-import java.util.*
 
 class ItemAdapter(private val context: Context, private val dataset: MutableList<SingleLista>, private val objekt: SingleLista ) :
     RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        val nazivListe: TextView = view.findViewById(R.id.item_title)
-        val datumListe: TextView = view.findViewById(R.id.item_date)
+        val listName: TextView = view.findViewById(R.id.item_title)
+        val listDate: TextView = view.findViewById(R.id.item_date)
         val btnDeleteList: ImageView = view.findViewById(R.id.btnDeleteIcon)
 
     }
@@ -38,17 +35,17 @@ class ItemAdapter(private val context: Context, private val dataset: MutableList
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = dataset[position]
-        holder.nazivListe.text = item.naziv
-        holder.datumListe.text = item.datum
+        holder.listName.text = item.title
+        holder.listDate.text = item.date
 
 
-        holder.nazivListe.setOnClickListener { view ->
+        holder.listName.setOnClickListener { view ->
 
             val intent = Intent(context, SingleListActivity::class.java)
             intent.putExtra("Extra_object", item as Serializable)
             context.startActivity(intent)
         }
-        holder.datumListe.setOnClickListener { view ->
+        holder.listDate.setOnClickListener { view ->
             val intent = Intent(context, SingleListActivity::class.java)
             intent.putExtra("Extra_object", item as Serializable)
             context.startActivity(intent)

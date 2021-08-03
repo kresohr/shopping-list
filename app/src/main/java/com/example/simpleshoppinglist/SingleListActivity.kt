@@ -4,12 +4,10 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
-import android.widget.CheckBox
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.simpleshoppinglist.adapter.ShoppingItemAdapter
-import com.example.simpleshoppinglist.data.Datasource
 import com.example.simpleshoppinglist.model.ShoppingItem
 import com.example.simpleshoppinglist.model.SingleLista
 import com.google.gson.Gson
@@ -42,7 +40,7 @@ class SingleListActivity : AppCompatActivity() {
         val recyclerViewSingle = findViewById<RecyclerView>(R.id.recycler_view_single)
         val btnAddShoppingItem: Button = findViewById(R.id.btnDodajNamirnicu)
         recyclerViewSingle.adapter = shoppingItemAdapter
-        headerTextView.text = getObjectFromRecyclerOnClick.naziv
+        headerTextView.text = getObjectFromRecyclerOnClick.title
 
 
         btnAddShoppingItem.setOnClickListener {
@@ -85,7 +83,7 @@ class SingleListActivity : AppCompatActivity() {
         val editor: SharedPreferences.Editor = sharedPreferences.edit()
         val gson = Gson()
         val json: String = gson.toJson(singleList.listOfShoppingItems)
-        editor.putString(singleList.naziv, json)
+        editor.putString(singleList.title, json)
         editor.apply()
     }
 
@@ -93,8 +91,8 @@ class SingleListActivity : AppCompatActivity() {
         val sharedPreferences: SharedPreferences =
             getSharedPreferences("Liste_u_objektu", MODE_PRIVATE)
         val gson = Gson()
-        if (sharedPreferences.getString(singleList.naziv, null) != null) {
-            val json: String = sharedPreferences.getString(singleList.naziv, null)!!
+        if (sharedPreferences.getString(singleList.title, null) != null) {
+            val json: String = sharedPreferences.getString(singleList.title, null)!!
             val turnsType = object : TypeToken<MutableList<ShoppingItem>>() {}.type
             singleList.listOfShoppingItems = gson.fromJson(json, turnsType)
             shoppingItemAdapter.notifyDataSetChanged()

@@ -9,8 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SimpleShoppingList">
-        <activity android:name=".AddShoppingItemActivity"></activity>
-        <activity android:name=".DodajListuActivity"/>
+        <activity android:name=".AddShoppingItemActivity"/>
+        <activity android:name=".AddListActivity"/>
         <activity android:name=".SingleListActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

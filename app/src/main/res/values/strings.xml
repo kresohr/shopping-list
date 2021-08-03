@@ -2,5 +2,4 @@
     <string name="app_name">Simple Shopping List</string>
     <string name="all_lists">Lists</string>
     <string name="add_list">Add New List</string>
-    <string name="total_cost">Total</string>
 </resources>

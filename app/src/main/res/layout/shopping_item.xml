@@ -31,7 +31,7 @@
                     android:gravity="end" />
 
                 <TextView
-                    android:id="@+id/naziv_namirnice"
+                    android:id="@+id/shopping_item_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -56,7 +56,7 @@
                         android:src="@drawable/minus" />
 
                     <TextView
-                        android:id="@+id/kolicina_namirnice"
+                        android:id="@+id/shopping_item_quantity"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:text="8"

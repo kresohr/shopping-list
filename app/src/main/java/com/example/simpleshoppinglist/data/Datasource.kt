@@ -1,19 +1,18 @@
 package com.example.simpleshoppinglist.data
 
-import com.example.simpleshoppinglist.model.ShoppingItem
 import com.example.simpleshoppinglist.model.SingleLista
-import com.example.simpleshoppinglist.model.SveListe
+import com.example.simpleshoppinglist.model.EveryList
 import java.io.Serializable
 
 class Datasource : Serializable {
-    var sveListe = SveListe()
+    var everyList = EveryList()
 
-    fun dodajListu(
-        naziv: String?,
-        datum: String = ""
+    fun addList(
+        title: String?,
+        date: String = ""
     ): List<SingleLista> {
-        var lista = SingleLista(naziv, datum)
-        sveListe.dodajSingleListu(lista)
-        return sveListe.listaSingleLista
+        val lista = SingleLista(title, date)
+        everyList.addSingleList(lista)
+        return everyList.listOfSingleLista
     }
 }

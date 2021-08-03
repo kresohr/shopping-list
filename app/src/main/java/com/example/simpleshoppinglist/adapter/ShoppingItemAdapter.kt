@@ -23,8 +23,8 @@ class ShoppingItemAdapter(
 
 
     class ItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        val nazivNamirnice: TextView = view.findViewById(R.id.naziv_namirnice)
-        val kolicinaNamirnice: TextView = view.findViewById(R.id.kolicina_namirnice)
+        val shoppingItemTitle: TextView = view.findViewById(R.id.shopping_item_name)
+        val shoppingItemQuantity: TextView = view.findViewById(R.id.shopping_item_quantity)
         val chkBoxIsDone: CheckBox = view.findViewById(R.id.chkBoxIsDone)
         val btnIncreaseQuantity: ImageView = view.findViewById(R.id.btnIncreaseQuantity)
         val btnDecreaseQuantity: ImageView = view.findViewById(R.id.btnDecreaseQuantity)
@@ -33,15 +33,14 @@ class ShoppingItemAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val adapterLayout =
-            LayoutInflater.from(parent.context).inflate(R.layout.namirnica_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.shopping_item, parent, false)
         return ItemViewHolder(adapterLayout)
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = dataset[position]
-        var chkBoxChecked = holder.chkBoxIsDone.isChecked
-        holder.nazivNamirnice.text = item.imeNamirnice
-        holder.kolicinaNamirnice.text = item.kolicinaNamirnice.toString()
+        holder.shoppingItemTitle.text = item.shoppingItemTitle
+        holder.shoppingItemQuantity.text = item.shoppingItemQuantity.toString()
 
         holder.chkBoxIsDone.setOnClickListener {
             if (holder.chkBoxIsDone.isChecked) {
@@ -52,24 +51,24 @@ class ShoppingItemAdapter(
             holder.chkBoxIsDone.isChecked = false
         }
         holder.btnDecreaseQuantity.setOnClickListener {
-            var kolicina = (holder.kolicinaNamirnice.text as String).toInt()
-            kolicina--
-            if (kolicina <= 0) {
+            var quantity = (holder.shoppingItemQuantity.text as String).toInt()
+            quantity--
+            if (quantity <= 0) {
                 dataset.removeAt(position)
                 notifyDataSetChanged()
                 updateSharedPreference(singleLista)
             } else {
-                holder.kolicinaNamirnice.text = kolicina.toString()
-                item.kolicinaNamirnice = kolicina
+                holder.shoppingItemQuantity.text = quantity.toString()
+                item.shoppingItemQuantity = quantity
                 updateSharedPreference(singleLista)
             }
 
         }
         holder.btnIncreaseQuantity.setOnClickListener {
-            var kolicina = (holder.kolicinaNamirnice.text as String).toInt()
-            kolicina++
-            holder.kolicinaNamirnice.text = kolicina.toString()
-            item.kolicinaNamirnice = kolicina
+            var quantity = (holder.shoppingItemQuantity.text as String).toInt()
+            quantity++
+            holder.shoppingItemQuantity.text = quantity.toString()
+            item.shoppingItemQuantity = quantity
             updateSharedPreference(singleLista)
 
         }
@@ -82,16 +81,16 @@ class ShoppingItemAdapter(
 
 
 
-    fun updateSharedPreference(nazivObjekta: SingleLista) {
+    fun updateSharedPreference(singleListObject: SingleLista) {
         val sharedPreferences: SharedPreferences = context.getSharedPreferences(
             "Liste_u_objektu",
             AppCompatActivity.MODE_PRIVATE
         )
         val editor: SharedPreferences.Editor = sharedPreferences.edit()
-        sharedPreferences.edit().remove(nazivObjekta.naziv)
+        sharedPreferences.edit().remove(singleListObject.title)
         val gson = Gson()
         val json: String = gson.toJson(dataset)
-        editor.putString(nazivObjekta.naziv, json)
+        editor.putString(singleListObject.title, json)
         editor.apply()
     }
 

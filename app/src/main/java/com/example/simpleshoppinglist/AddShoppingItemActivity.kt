@@ -11,7 +11,7 @@ import android.widget.Toast
 class AddShoppingItemActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_dodaj_namirnicu)
+        setContentView(R.layout.activity_add_shopping_item)
         val shoppingItemName: EditText = findViewById(R.id.nazivNamirniceEditText)
         val shoppingItemQuantity: EditText = findViewById(R.id.kolicinaNamirniceEditText)
         val btnAddShoppingItem: Button = findViewById(R.id.btnSpremiNamirnicu)

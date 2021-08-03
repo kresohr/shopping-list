@@ -4,32 +4,24 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract
-import android.view.View
-import android.widget.Adapter
 import android.widget.Button
-import android.widget.ImageView
-import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.simpleshoppinglist.adapter.ItemAdapter
 import com.example.simpleshoppinglist.data.Datasource
 import com.example.simpleshoppinglist.model.SingleLista
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import java.io.Serializable
-import java.lang.reflect.Type
 
 var datasource: Datasource = Datasource()
-var dohvatiSveListe = datasource.sveListe.listaSingleLista
-var prazniObjektSingleListe = SingleLista("")
+var getEverySingleList = datasource.everyList.listOfSingleLista
+var emptyInstanceOfSingleList = SingleLista("")
 val activityIntentItem: Int = 2
 
 class MainActivity : AppCompatActivity() {
-    var itemAdapter = ItemAdapter(this, dohvatiSveListe, prazniObjektSingleListe)
+    var itemAdapter = ItemAdapter(this, getEverySingleList, emptyInstanceOfSingleList)
 
     companion object {
-        var sveListe = dohvatiSveListe
+        var everyList = getEverySingleList
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,12 +31,12 @@ class MainActivity : AppCompatActivity() {
 
 
         val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
-        recyclerView.adapter = ItemAdapter(this, dohvatiSveListe, prazniObjektSingleListe)
+        recyclerView.adapter = ItemAdapter(this, getEverySingleList, emptyInstanceOfSingleList)
         itemAdapter = recyclerView.adapter as ItemAdapter
-        val btnNovaLista: Button = findViewById(R.id.btnNovaLista)
+        val btnNewList: Button = findViewById(R.id.btnNovaLista)
 
-        btnNovaLista.setOnClickListener {
-            val intent = Intent(this, DodajListuActivity::class.java)
+        btnNewList.setOnClickListener {
+            val intent = Intent(this, AddListActivity::class.java)
             this.startActivityForResult(intent, activityIntentItem)
         }
     }
@@ -65,17 +57,17 @@ class MainActivity : AppCompatActivity() {
         if (sharedPreferences.getString("Spremi_Listu", null) != null) {
             val json: String = sharedPreferences.getString("Spremi_Listu", null)!!
             val turnsType = object : TypeToken<MutableList<SingleLista>>() {}.type
-            dohvatiSveListe = gson.fromJson(json, turnsType)
-            sveListe = dohvatiSveListe
+            getEverySingleList = gson.fromJson(json, turnsType)
+            everyList = getEverySingleList
         } else {
-            datasource.sveListe.listaSingleLista.clear()
+            datasource.everyList.listOfSingleLista.clear()
         }
     }
 
     fun deleteItem(position: Int) {
-        dohvatiSveListe.removeAt(position)
+        getEverySingleList.removeAt(position)
         itemAdapter.notifyItemRemoved(position)
-        itemAdapter.notifyItemRangeChanged(position, dohvatiSveListe.size)
+        itemAdapter.notifyItemRangeChanged(position, getEverySingleList.size)
     }
 
 
@@ -83,9 +75,9 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == activityIntentItem) {
             if (resultCode == RESULT_OK) {
-                val dohvatiObjekt = data?.getSerializableExtra("Single_Lista") as SingleLista
-                dohvatiSveListe.add(dohvatiObjekt)
-                saveData(dohvatiSveListe)
+                val catchObject = data?.getSerializableExtra("Single_Lista") as SingleLista
+                getEverySingleList.add(catchObject)
+                saveData(getEverySingleList)
             }
         }
 
