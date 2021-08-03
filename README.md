@@ -1,4 +1,4 @@
-# simple-shopping-list
+# Simple Shopping List without database in Kotlin
 
 This project is something I have decided to make for myself since I didn't like any of the available ones on the Google Playstore.
 To make it challenging and to learn something new, I've made it without any kind of database, sharedpreferences was used instead.
